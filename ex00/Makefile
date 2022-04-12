@@ -1,17 +1,21 @@
-NAME	=	claptrap
+NAME	=		claptrap
 
-SRCS	=	ClapTrap.cpp main.cpp
+SRCS	=		$(shell find . -type f -name '*.cpp')
 
-OBJS	=	${SRCS:.cpp=.o}
+OBJS	=		${SRCS:.cpp=.o}
 
-DEP 	=	$(OBJS:.o=.d)
+DEP 	=		$(OBJS:.o=.d)
 
-FLAGS	=	-Wall -Wextra -Werror -MMD -I.
+CXX		=		c++
+
+CXXFLAGS	=	-std=c++98 -Wall -Wextra -Werror
+
+CPPFLAGS	=	-MMD -I.
 
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	c++ $(FLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $^ -o $@
 
 clean:
 	rm -f $(OBJS) $(DEP)
@@ -23,4 +27,4 @@ re:	clean all
 
 .PHONY:	all clean fclean re
 
-include $(wildcard $(DEP))
+-include $(DEP)
